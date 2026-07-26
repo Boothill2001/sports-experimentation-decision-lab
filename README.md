@@ -1,23 +1,48 @@
 # Sports Experimentation Decision Lab
 
 [![quality gates](https://github.com/Boothill2001/sports-experimentation-decision-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/Boothill2001/sports-experimentation-decision-lab/actions/workflows/ci.yml)
-[![public lab](https://img.shields.io/badge/demo-open%20decision%20room-c5fa37)](https://boothill2001.github.io/sports-experimentation-decision-lab/)
+[![public review board](https://img.shields.io/badge/demo-open%20review%20board-6C5CE7)](https://boothill2001.github.io/sports-experimentation-decision-lab/)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-3776ab)](https://www.python.org/)
 
-A hands-on review room for deciding whether a sports-product experiment should
+A hands-on review board for deciding whether a sports-product experiment should
 **SHIP, HOLD, WAIT, be declared INVALID, or remain INCONCLUSIVE**.
 
-**[Open the recruiter-ready Decision Room](https://boothill2001.github.io/sports-experimentation-decision-lab/)**
-— no install, account or cloud bill required.
+## [Open the public Experiment Review Board](https://boothill2001.github.io/sports-experimentation-decision-lab/)
+
+No install, account, API key or cloud bill is required.
 
 > All users, assignments, outcomes and effect sizes are deterministic synthetic data
 > generated with seed `42`. This repository demonstrates experimentation method and
-> decision quality—not Unity Sport, employer or client results.
+> decision quality, not Unity Sport, employer or client results.
+
+## The design story
+
+This is not another KPI dashboard. The interface is an executive review surface built
+around the order in which a trustworthy experiment should be judged:
+
+```text
+Design -> Integrity -> Effect -> Guardrails -> Decision
+```
+
+- **Design** defines the business question, randomization unit, ITT population, primary
+  metric, guardrails and sample before results are read.
+- **Integrity** treats eligibility, assignment, exposure and outcome lineage as gates.
+  SRM and exposure reconciliation are trust checkpoints, not decorative KPIs.
+- **Effect** makes the 95% confidence interval the visual center of the evidence. The
+  zero-effect line and uncertainty are readable before the p-value.
+- **Guardrails** acts as a veto board and places durability and platform mix beside the
+  primary effect so novelty and Simpson's paradox cannot hide.
+- **Decision** converts evidence into a one-minute memo with rationale, limitation,
+  owner and next action.
+
+The **Practice mode** opens as a review drawer: choose a decision before revealing the
+answer. The **Learning guide** is a separate guided overlay, keeping the recruiter view
+focused on decision quality.
 
 ## Why this repository exists
 
-Many portfolios stop at “treatment increased conversion and p < 0.05.” Real Product
-Analytics work starts earlier and ends later:
+Many portfolios stop at "treatment increased conversion and p < 0.05." Real product
+analytics starts earlier and ends later:
 
 1. Was randomization valid?
 2. Which population and estimand are we measuring?
@@ -26,8 +51,9 @@ Analytics work starts earlier and ends later:
 5. Is the effect durable across time and planned segments?
 6. What decision, owner and follow-up should Product take?
 
-The Decision Room makes those questions executable. It complements—not duplicates—the
-dashboard, analyst-workbench and live-reliability repositories in this portfolio.
+This lab makes those questions executable. It complements the dashboard,
+analyst-workbench and live-reliability repositories in this portfolio without copying
+their sidebar or KPI-card visual language.
 
 ## Recruiter-verifiable evidence
 
@@ -49,12 +75,12 @@ dashboard, analyst-workbench and live-reliability repositories in this portfolio
 | Clean win | Positive conversion lift | **SHIP** | Valid assignment + CI above zero + healthy guardrails |
 | SRM | Lift looks attractive | **INVALID** | A p-value cannot repair broken randomization |
 | Guardrail regression | Conversion rises | **HOLD** | Crash-rate harm can veto a primary win |
-| Novelty effect | First week is strong | **WAIT** | Early excitement is not durable effect |
+| Novelty effect | First week is strong | **WAIT** | Early excitement is not a durable effect |
 | Simpson's paradox | Aggregate and platforms disagree | **INVALID** | Audit allocation mix before averaging |
 | Exposure-selection bias | Exposed users look better | **INVALID** | ITT preserves randomization; exposure is post-treatment |
 
-The expected matrix is calculated from generated rows, not hard-coded into the interface.
-`sports-exp validate` rebuilds all six scenarios and verifies their data contracts.
+The matrix is calculated from generated rows, not hard-coded into the interface.
+`sports-exp validate` rebuilds all six scenarios and verifies the public contract.
 
 ## Product architecture
 
@@ -66,11 +92,11 @@ flowchart LR
     G --> O[(outcomes)]
     U & A & E & O --> D[(DuckDB + Parquet)]
     D --> SQL[10 analyst SQL workflows]
-    U & A & E & O --> S[Statistics engine<br/>SRM · CI · CUPED]
-    S --> R[Decision report<br/>SHIP/HOLD/WAIT/INVALID]
+    U & A & E & O --> S[Statistics engine<br/>SRM / CI / CUPED]
+    S --> R[Decision report<br/>SHIP / HOLD / WAIT / INVALID]
     R --> API[FastAPI local lab]
     R --> J[Recorded JSON]
-    J --> P[GitHub Pages<br/>Decision Room]
+    J --> P[GitHub Pages<br/>Review Board]
 ```
 
 ### Data grain
@@ -89,13 +115,13 @@ Read the [metric contract](docs/METRIC_CONTRACT.md) before interpreting a result
 Double-click `start_lab.bat`. It creates a Python 3.11 environment, regenerates the
 recorded evidence and opens `http://localhost:8091`.
 
-The five workspaces are:
+Review an experiment in this order:
 
-1. **Decision Board** — primary effect, interval, p-value and guardrail veto.
-2. **Integrity Gates** — SRM, exposure reconciliation and ITT versus exposed-only.
-3. **Segments & CUPED** — platform mix, durability and variance reduction.
-4. **Challenge Lab** — choose a lab, answer aloud, then reveal evidence.
-5. **Learning Path** — seven days from metric contract to review-board communication.
+1. Check the design contract.
+2. Pass the integrity gates.
+3. Interpret effect size and uncertainty.
+4. Check vetoes, durability and segment mix.
+5. Make and communicate the decision.
 
 Start with the Vietnamese [7-day workbook](docs/HOC_7_NGAY.txt), then use the
 [decision memo template](docs/DECISION_MEMO.txt) and practice the
@@ -150,15 +176,14 @@ sports-exp validate
 ```
 
 Tests cover deterministic generation, primary/foreign keys, population preservation,
-SRM, guardrail veto, novelty, Simpson's paradox, exposure bias, CUPED, DuckDB persistence,
-public export and API transparency. Coverage must remain at least 85%.
+SRM, guardrail veto, novelty, Simpson's paradox, exposure bias, CUPED, DuckDB
+persistence, UI contract, public export and API transparency. Coverage must remain at
+least 85%.
 
-On every `main` push, GitHub Actions rebuilds the JSON and fails if committed evidence no
-longer matches the statistics engine. Pages deploys only after quality gates pass.
+On every `main` push, GitHub Actions rebuilds the JSON and fails if committed evidence
+no longer matches the statistics engine. Pages deploys only after quality gates pass.
 
-## Interview walkthrough
-
-Use this order in 90 seconds:
+## 90-second interview walkthrough
 
 1. Business question and randomization unit.
 2. ITT population and primary metric.
@@ -169,9 +194,9 @@ Use this order in 90 seconds:
 7. SHIP/HOLD/WAIT/INVALID recommendation.
 8. Owner, next action and synthetic-data limitation.
 
-The strongest line in this repository is not “I know A/B testing.” It is:
+The strongest line in this repository is:
 
-> “I check whether an experiment is interpretable before I check whether it is significant.”
+> "I check whether an experiment is interpretable before I check whether it is significant."
 
 ## Honest limitations
 
