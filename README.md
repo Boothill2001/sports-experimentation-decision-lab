@@ -39,6 +39,50 @@ The **Practice mode** opens as a review drawer: choose a decision before reveali
 answer. The **Learning guide** is a separate guided overlay, keeping the recruiter view
 focused on decision quality.
 
+## Review Board gallery
+
+### Recruiter overview
+
+The first fold states the experiment, scenario, review sequence and live recommendation
+without hiding the synthetic-data boundary.
+
+![Experiment Review Board overview](docs/screenshots/01-review-board-overview.png)
+
+### 01 - Design
+
+The decision contract fixes the business question, randomization unit, estimand, primary
+metric, guardrails and sample before interpretation begins.
+
+![Experiment design contract](docs/screenshots/02-design-contract.png)
+
+### 02 - Integrity
+
+SRM, assignment balance, lineage and the ITT population decide whether the effect is
+interpretable.
+
+![Experiment integrity gates](docs/screenshots/03-integrity-gates.png)
+
+### 03 - Effect
+
+The confidence interval and zero-effect line lead; lift, p-value and CUPED remain on the
+same evidence canvas.
+
+![Effect size and confidence interval](docs/screenshots/04-effect-confidence-interval.png)
+
+### 04 - Guardrails
+
+Reliability vetoes, durability and planned platform diagnostics sit beside the primary
+effect so a conversion win cannot hide product harm.
+
+![Guardrail veto board](docs/screenshots/05-guardrail-veto-board.png)
+
+### 05 - Decision
+
+The final memo records trust, effect, safety, rationale, owner, next action and honest
+limitation in one review surface.
+
+![One-minute experiment decision memo](docs/screenshots/06-decision-memo.png)
+
 ## Why this repository exists
 
 Many portfolios stop at "treatment increased conversion and p < 0.05." Real product
