@@ -3,157 +3,368 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hands-on sports product experimentation review lab">
-  <title>Decision Room · Sports Experimentation Lab</title>
+  <meta name="description" content="Executive review board for sports product experiments">
+  <meta name="theme-color" content="#111527">
+  <title>Experiment Review Board · Match Center v2</title>
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark">DR</div>
-      <div><strong>DECISION ROOM</strong><span>SPORTS EXPERIMENTATION</span></div>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <a class="brand" href="#" aria-label="Experiment Review Board home">
+      <span class="brand-symbol" aria-hidden="true">Δ</span>
+      <span>
+        <strong>EXPERIMENT REVIEW BOARD</strong>
+        <small>Sports Product Decision Quality</small>
+      </span>
+    </a>
+    <div class="header-meta">
+      <span class="evidence-pill"><i></i> Recorded synthetic evidence · seed 42</span>
+      <button class="header-action" id="learning-open" type="button">
+        <span aria-hidden="true">◎</span> Learning guide
+      </button>
+      <button class="header-action primary" id="practice-open" type="button">
+        <span aria-hidden="true">↗</span> Practice mode
+      </button>
     </div>
-    <div class="truth-badge">
-      <i></i><strong>RECORDED LAB · SEED 42</strong>
-      <span>Deterministic synthetic evidence</span>
+  </header>
+
+  <section class="command-bar" aria-label="Experiment scenario">
+    <div class="command-copy">
+      <p class="overline">MATCH CENTER V2 · USER-LEVEL RANDOMIZED TEST</p>
+      <h1 id="scenario-title">Clean measurable win</h1>
+      <p id="scenario-interpretation"></p>
     </div>
-    <nav id="navigation">
-      <button class="nav-item active" data-view="decision"><small>01</small> Decision board</button>
-      <button class="nav-item" data-view="integrity"><small>02</small> Integrity gates</button>
-      <button class="nav-item" data-view="segments"><small>03</small> Segments & CUPED</button>
-      <button class="nav-item" data-view="lab"><small>04</small> Challenge lab</button>
-      <button class="nav-item" data-view="learn"><small>05</small> Learning path</button>
-    </nav>
-    <footer>
-      <strong>Honest boundary</strong>
-      <p>All users, outcomes and effects are synthetic. This demonstrates method—not employer results.</p>
-      <span>Portfolio by Nguyen Minh Tri</span>
-    </footer>
+    <label class="scenario-command">
+      <span>REVIEW SCENARIO</span>
+      <select id="scenario-select" aria-label="Choose experiment scenario"></select>
+      <kbd>⌘ K</kbd>
+    </label>
+  </section>
+
+  <nav class="review-stepper" id="review-stepper" aria-label="Experiment review stages">
+    <button class="step active" type="button" data-step="design" aria-current="step">
+      <span>01</span><strong>Design</strong><small>What did we test?</small>
+    </button>
+    <button class="step" type="button" data-step="integrity">
+      <span>02</span><strong>Integrity</strong><small>Can we trust it?</small>
+    </button>
+    <button class="step" type="button" data-step="effect">
+      <span>03</span><strong>Effect</strong><small>What changed?</small>
+    </button>
+    <button class="step" type="button" data-step="guardrails">
+      <span>04</span><strong>Guardrails</strong><small>Is it safe?</small>
+    </button>
+    <button class="step" type="button" data-step="decision">
+      <span>05</span><strong>Decision</strong><small>What happens next?</small>
+    </button>
+  </nav>
+
+  <div class="board-layout">
+    <main class="review-canvas" id="review-canvas">
+      <section class="review-stage active" id="design-stage" data-stage="design">
+        <div class="stage-heading">
+          <div>
+            <p class="overline">01 · EXPERIMENT CONTRACT</p>
+            <h2>Start with the decision—not the p-value.</h2>
+          </div>
+          <span class="stage-note">Predeclared review frame</span>
+        </div>
+
+        <article class="brief-card">
+          <div class="brief-question">
+            <span class="brief-index">Q</span>
+            <div>
+              <p>BUSINESS QUESTION</p>
+              <h3>Does Match Center v2 increase seven-day subscription conversion without harming product quality?</h3>
+            </div>
+          </div>
+          <div class="contract-grid">
+            <div><span>Randomization unit</span><strong>user_id</strong></div>
+            <div><span>Estimand</span><strong>Intent-to-treat</strong></div>
+            <div><span>Primary metric</span><strong>7-day subscription</strong></div>
+            <div><span>Confidence</span><strong>95% · two-sided</strong></div>
+          </div>
+        </article>
+
+        <div class="variant-split">
+          <article class="variant control">
+            <div class="variant-top">
+              <span class="variant-letter">A</span>
+              <div><p>CONTROL</p><h3>Current Match Center</h3></div>
+            </div>
+            <div class="variant-metric"><strong id="design-control-n">—</strong><span>assigned users</span></div>
+            <div class="variant-foot"><span id="design-control-rate">—</span> convert within 7 days</div>
+          </article>
+          <div class="versus" aria-hidden="true"><span>VS</span></div>
+          <article class="variant treatment">
+            <div class="variant-top">
+              <span class="variant-letter">B</span>
+              <div><p>TREATMENT</p><h3>Match Center v2</h3></div>
+            </div>
+            <div class="variant-metric"><strong id="design-treatment-n">—</strong><span>assigned users</span></div>
+            <div class="variant-foot"><span id="design-treatment-rate">—</span> convert within 7 days</div>
+          </article>
+        </div>
+
+        <div class="contract-ribbon">
+          <div><span>PRIMARY</span><strong>Subscription conversion</strong></div>
+          <div><span>VETO 01</span><strong>Crash rate</strong></div>
+          <div><span>VETO 02</span><strong>Cancellation rate</strong></div>
+          <div><span>SAMPLE</span><strong id="design-sample">—</strong></div>
+        </div>
+      </section>
+
+      <section class="review-stage" id="integrity-stage" data-stage="integrity">
+        <div class="stage-heading">
+          <div>
+            <p class="overline">02 · TRUST GATES</p>
+            <h2>Significance waits outside until integrity passes.</h2>
+          </div>
+          <span class="stage-note" id="integrity-status">—</span>
+        </div>
+
+        <article class="integrity-hero">
+          <div class="integrity-score">
+            <span>INTERPRETABILITY</span>
+            <strong id="integrity-word">—</strong>
+            <p id="integrity-summary"></p>
+          </div>
+          <div class="srm-visual">
+            <div class="srm-title"><span>Sample-ratio mismatch</span><strong id="srm-p">—</strong></div>
+            <div class="allocation-track">
+              <span id="allocation-control"></span>
+              <span id="allocation-treatment"></span>
+              <i aria-hidden="true"></i>
+            </div>
+            <div class="allocation-labels">
+              <span>Control <b id="allocation-control-copy">—</b></span>
+              <span>Planned 50 / 50</span>
+              <span>Treatment <b id="allocation-treatment-copy">—</b></span>
+            </div>
+          </div>
+        </article>
+
+        <div class="integrity-grid">
+          <article class="ledger-card">
+            <div class="card-heading"><p>EXPERIMENT LINEAGE</p><h3>Trust checkpoint ledger</h3></div>
+            <ol class="gate-ledger" id="gate-ledger"></ol>
+          </article>
+          <article class="population-card">
+            <div class="card-heading"><p>POPULATION CONTRACT</p><h3>Assigned is not exposed</h3></div>
+            <div class="population-number"><strong id="exposure-rate">—</strong><span>exposure rate</span></div>
+            <div class="population-compare">
+              <div><span>ITT lift</span><strong id="itt-lift">—</strong><small>causal estimate</small></div>
+              <div><span>Exposed-only</span><strong id="exposed-lift">—</strong><small>diagnostic</small></div>
+            </div>
+            <p id="population-note"></p>
+          </article>
+        </div>
+      </section>
+
+      <section class="review-stage" id="effect-stage" data-stage="effect">
+        <div class="stage-heading">
+          <div>
+            <p class="overline">03 · EFFECT & UNCERTAINTY</p>
+            <h2>The interval is the headline.</h2>
+          </div>
+          <span class="stage-note">Intent-to-treat estimate</span>
+        </div>
+
+        <article class="effect-hero">
+          <div class="effect-summary">
+            <p>ABSOLUTE LIFT</p>
+            <strong id="effect-lift">—</strong>
+            <span id="effect-relative">— relative</span>
+          </div>
+          <div class="interval-board">
+            <div class="interval-top">
+              <span>95% confidence interval</span>
+              <strong id="effect-ci-copy">—</strong>
+            </div>
+            <div class="interval-axis" id="interval-axis">
+              <span class="axis-label left">−5 pp</span>
+              <span class="axis-label zero">0</span>
+              <span class="axis-label right">+5 pp</span>
+              <i class="zero-line" aria-hidden="true"></i>
+              <div class="interval-range" id="effect-ci-range"><b id="effect-point"></b></div>
+            </div>
+            <p id="effect-interpretation"></p>
+          </div>
+        </article>
+
+        <div class="effect-grid">
+          <article class="rate-comparison">
+            <div class="card-heading"><p>OBSERVED RATES</p><h3>Control versus treatment</h3></div>
+            <div id="effect-bars" class="effect-bars"></div>
+          </article>
+          <article class="evidence-stat">
+            <span>p-value</span><strong id="effect-p">—</strong><small id="effect-p-note">—</small>
+          </article>
+          <article class="evidence-stat violet">
+            <span>CUPED variance reduction</span><strong id="effect-cuped">—</strong><small>pre-period watch time</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="review-stage" id="guardrails-stage" data-stage="guardrails">
+        <div class="stage-heading">
+          <div>
+            <p class="overline">04 · SAFETY, DURABILITY & MIX</p>
+            <h2>A win can still be vetoed.</h2>
+          </div>
+          <span class="stage-note" id="guardrail-overall">—</span>
+        </div>
+
+        <div class="veto-board" id="veto-board"></div>
+
+        <div class="diagnostic-grid">
+          <article class="durability-card">
+            <div class="card-heading">
+              <div><p>DURABILITY</p><h3>Early versus late cohorts</h3></div>
+              <span id="novelty-tag">—</span>
+            </div>
+            <div id="durability-bars" class="durability-bars"></div>
+          </article>
+          <article class="mix-card">
+            <div class="card-heading">
+              <div><p>PLATFORM MIX</p><h3>Planned heterogeneity</h3></div>
+              <span id="simpson-tag">—</span>
+            </div>
+            <div id="segment-board" class="segment-board"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="review-stage" id="decision-stage" data-stage="decision">
+        <div class="stage-heading">
+          <div>
+            <p class="overline">05 · ONE-MINUTE DECISION MEMO</p>
+            <h2>Evidence becomes an owned action.</h2>
+          </div>
+          <button class="memo-copy" id="memo-copy" type="button">Copy memo</button>
+        </div>
+
+        <article class="memo-sheet">
+          <header>
+            <div>
+              <span>EXPERIMENT</span>
+              <strong>Match Center v2</strong>
+            </div>
+            <div>
+              <span>RECOMMENDATION</span>
+              <strong id="memo-decision">—</strong>
+            </div>
+          </header>
+          <div class="memo-grid">
+            <div class="memo-section">
+              <span>01 · TRUST</span>
+              <p id="memo-trust"></p>
+            </div>
+            <div class="memo-section">
+              <span>02 · EFFECT</span>
+              <p id="memo-effect"></p>
+            </div>
+            <div class="memo-section">
+              <span>03 · SAFETY</span>
+              <p id="memo-safety"></p>
+            </div>
+            <div class="memo-section">
+              <span>04 · DURABILITY</span>
+              <p id="memo-durability"></p>
+            </div>
+          </div>
+          <div class="memo-recommendation">
+            <div><span>RATIONALE</span><p id="memo-rationale"></p></div>
+            <div><span>OWNER & NEXT ACTION</span><p id="memo-action"></p></div>
+          </div>
+          <footer>
+            <span>LIMITATION</span>
+            <p id="memo-limitation"></p>
+          </footer>
+        </article>
+
+        <article class="practice-invite">
+          <div><p class="overline">REVIEW BOARD CHALLENGE</p><h3>Can you decide before the answer appears?</h3></div>
+          <p>Eight guided cases test SRM, guardrail vetoes, novelty, Simpson’s paradox, exposure bias and CUPED.</p>
+          <button id="practice-open-inline" type="button">Enter practice mode <span>→</span></button>
+        </article>
+      </section>
+    </main>
+
+    <aside class="decision-rail" id="decision-rail">
+      <div class="rail-kicker">LIVE REVIEW STATE</div>
+      <div class="rail-decision" id="rail-decision">—</div>
+      <p id="rail-rationale"></p>
+      <div class="rail-divider"></div>
+      <div class="rail-gates" id="rail-gates"></div>
+      <div class="rail-divider"></div>
+      <div class="rail-next">
+        <span>NEXT ACTION</span>
+        <strong id="rail-action"></strong>
+        <small id="rail-owner"></small>
+      </div>
+      <button id="rail-jump" type="button">Open decision memo <span>→</span></button>
+    </aside>
+  </div>
+
+  <footer class="page-footer">
+    <span>Portfolio by Nguyen Minh Tri · deterministic seed 42</span>
+    <span>Recorded synthetic evidence · not employer or Unity Sport production data</span>
+  </footer>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="practice-drawer" id="practice-drawer" aria-hidden="true" aria-labelledby="practice-title">
+    <header>
+      <div><p>CHALLENGE MODE</p><h2 id="practice-title">Decide before reveal.</h2></div>
+      <button class="icon-button" id="practice-close" type="button" aria-label="Close practice mode">×</button>
+    </header>
+    <div class="drawer-body">
+      <label class="lab-command">
+        <span>CASE</span>
+        <select id="lab-select" aria-label="Choose practice case"></select>
+      </label>
+      <div class="case-brief">
+        <p id="lab-number"></p>
+        <h3 id="lab-title">—</h3>
+        <blockquote id="lab-question"></blockquote>
+        <span>Questions to clarify</span>
+        <ul id="lab-clarify"></ul>
+      </div>
+      <div class="prediction-block">
+        <span>YOUR DECISION</span>
+        <div class="prediction-options" id="prediction-options"></div>
+      </div>
+      <button class="reveal-button" id="reveal-button" type="button" disabled>Lock decision & reveal evidence</button>
+      <div class="lab-answer" id="lab-answer" hidden>
+        <div class="answer-verdict">
+          <span id="answer-match"></span>
+          <strong id="lab-decision"></strong>
+        </div>
+        <p id="lab-evidence"></p>
+        <p id="lab-rationale"></p>
+      </div>
+    </div>
   </aside>
 
-  <main>
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">MATCH CENTER V2 · PRODUCT REVIEW</p>
-        <h1 id="page-title">Experiment decision board</h1>
+  <div class="learning-overlay" id="learning-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="learning-title">
+    <div class="learning-panel">
+      <header>
+        <div><p>GUIDED PRACTICE</p><h2 id="learning-title">Seven days to decision quality.</h2></div>
+        <button class="icon-button" id="learning-close" type="button" aria-label="Close learning guide">×</button>
+      </header>
+      <div class="learning-timeline" id="learning-timeline"></div>
+      <div class="final-test">
+        <span>FINAL TEST · 90 SECONDS</span>
+        <strong>Defend a HOLD decision when conversion is up.</strong>
+        <p>Cover randomization, estimand, uncertainty, guardrail, owner, next action and limitation.</p>
       </div>
-      <div class="controls">
-        <label>
-          <span>SCENARIO</span>
-          <select id="scenario-select"></select>
-        </label>
-        <div class="mode-pill"><span></span> Recorded evidence</div>
-      </div>
-    </header>
+    </div>
+  </div>
 
-    <section id="decision-view" class="view active">
-      <div class="hero-grid">
-        <article class="decision-card dark">
-          <p class="eyebrow lime">REVIEW DECISION</p>
-          <div id="decision-word" class="decision-word">—</div>
-          <p id="decision-rationale" class="decision-rationale"></p>
-        </article>
-        <article class="decision-card">
-          <p class="eyebrow">PRIMARY METRIC</p>
-          <h2>7-day subscription conversion</h2>
-          <div class="lift-line"><strong id="absolute-lift">—</strong><span>absolute lift</span></div>
-          <p id="confidence-copy"></p>
-        </article>
-      </div>
-      <div class="kpi-grid four">
-        <article class="kpi"><span>Assigned users</span><strong id="assigned-users">—</strong><small>intent-to-treat</small></article>
-        <article class="kpi"><span>Control</span><strong id="control-rate">—</strong><small>subscription rate</small></article>
-        <article class="kpi"><span>Treatment</span><strong id="treatment-rate">—</strong><small>subscription rate</small></article>
-        <article class="kpi"><span>p-value</span><strong id="p-value">—</strong><small id="significance-label">two-sided z-test</small></article>
-      </div>
-      <div class="panel-grid">
-        <article class="panel">
-          <div class="panel-head"><div><p class="eyebrow">EFFECT SIZE</p><h2>Conversion comparison</h2></div><span class="tag">ITT</span></div>
-          <div id="conversion-bars" class="comparison-bars"></div>
-          <div class="ci-strip"><span id="ci-label"></span><div class="ci-track"><i id="ci-range"></i><b></b></div></div>
-        </article>
-        <article class="panel">
-          <div class="panel-head"><div><p class="eyebrow">SAFETY CHECK</p><h2>Guardrail veto</h2></div><span id="guardrail-status" class="tag">—</span></div>
-          <div id="guardrail-list" class="guardrail-list"></div>
-        </article>
-      </div>
-      <p class="limitation" id="limitation"></p>
-    </section>
-
-    <section id="integrity-view" class="view">
-      <div class="section-intro"><p class="eyebrow">TRUST BEFORE LIFT</p><h2>Can this experiment be interpreted?</h2><p>Randomization and population checks happen before significance.</p></div>
-      <div class="kpi-grid four">
-        <article class="kpi"><span>SRM p-value</span><strong id="srm-p">—</strong><small id="srm-copy">50/50 assignment</small></article>
-        <article class="kpi"><span>Exposure rate</span><strong id="exposure-rate">—</strong><small>after assignment</small></article>
-        <article class="kpi"><span>Assigned lift</span><strong id="itt-lift">—</strong><small>causal ITT estimate</small></article>
-        <article class="kpi"><span>Exposed-only lift</span><strong id="exposed-lift">—</strong><small>diagnostic only</small></article>
-      </div>
-      <div class="panel-grid">
-        <article class="panel">
-          <div class="panel-head"><div><p class="eyebrow">ORDER OF OPERATIONS</p><h2>Experiment trust gates</h2></div></div>
-          <ol id="trust-gates" class="gate-list"></ol>
-        </article>
-        <article class="panel dark-panel">
-          <p class="eyebrow lime">ANALYST RULE</p>
-          <blockquote>“A small p-value cannot repair broken randomization.”</blockquote>
-          <p>Check eligibility, assignment, exposure and metric lineage before reading treatment lift.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="segments-view" class="view">
-      <div class="section-intro"><p class="eyebrow">HETEROGENEITY & PRECISION</p><h2>Aggregate is not always the answer.</h2><p>Inspect planned segments and reduce noise with pre-treatment evidence.</p></div>
-      <div class="panel-grid">
-        <article class="panel">
-          <div class="panel-head"><div><p class="eyebrow">PLATFORM MIX</p><h2>Lift by platform</h2></div><span id="simpson-tag" class="tag">—</span></div>
-          <div id="segment-bars" class="segment-bars"></div>
-        </article>
-        <article class="panel cuped-card">
-          <p class="eyebrow">CUPED</p>
-          <div class="big-number" id="cuped-reduction">—</div>
-          <h2>variance reduction</h2>
-          <p>Pre-period watch time reduces noise without using post-treatment information.</p>
-          <div class="variance-track"><span id="variance-after"></span></div>
-        </article>
-      </div>
-      <article class="panel timeline-panel">
-        <div class="panel-head"><div><p class="eyebrow">DURABILITY</p><h2>Early versus late cohort lift</h2></div><span id="novelty-tag" class="tag">—</span></div>
-        <div id="cohort-bars" class="cohort-bars"></div>
-      </article>
-    </section>
-
-    <section id="lab-view" class="view">
-      <div class="section-intro"><p class="eyebrow">CHALLENGE MODE</p><h2>Decide before you reveal.</h2><p>Say your answer out loud, then compare it with the evidence.</p></div>
-      <div class="lab-layout">
-        <aside class="lab-picker" id="lab-picker"></aside>
-        <article class="panel lab-card">
-          <p class="eyebrow" id="lab-number">LAB</p>
-          <h2 id="lab-title">—</h2>
-          <p class="lab-question" id="lab-question"></p>
-          <div>
-            <h3>Questions to clarify</h3>
-            <ul id="lab-clarify"></ul>
-          </div>
-          <button id="reveal-button" class="reveal-button">Reveal decision evidence</button>
-          <div id="lab-answer" class="lab-answer hidden">
-            <span id="lab-decision" class="decision-chip"></span>
-            <p id="lab-evidence"></p>
-            <p id="lab-rationale"></p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="learn-view" class="view">
-      <div class="section-intro"><p class="eyebrow">7-DAY PRACTICE PATH</p><h2>From “p &lt; 0.05” to decision quality.</h2><p>Run one lab per day and explain it without reading the answer.</p></div>
-      <div class="learning-grid" id="learning-grid"></div>
-      <article class="interview-card">
-        <div><p class="eyebrow lime">FINAL TEST</p><h2>Can you defend a HOLD decision when conversion is up?</h2></div>
-        <p>Explain randomization, estimand, uncertainty, guardrail, business impact and limitation in 90 seconds.</p>
-      </article>
-    </section>
-  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="assets/app.js"></script>
 </body>
 </html>
-
