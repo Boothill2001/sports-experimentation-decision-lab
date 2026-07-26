@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sports-experimentation-decision-lab"
+version = "0.1.0"
+description = "Hands-on sports product experimentation and decision-quality portfolio"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "duckdb>=1.4,<2",
+  "fastapi>=0.115,<1",
+  "numpy>=2.0,<3",
+  "pandas>=2.2,<3",
+  "pyarrow>=17,<20",
+  "pydantic>=2.10,<3",
+  "uvicorn[standard]>=0.34,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<9",
+  "pytest-cov>=6,<8",
+  "ruff>=0.9,<1",
+  "sqlfluff>=3.3,<4",
+]
+
+[project.scripts]
+sports-exp = "sports_exp.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers --cov=sports_exp --cov-report=term-missing --cov-fail-under=85"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+omit = ["src/sports_exp/cli.py", "src/sports_exp/api.py"]
+
+[tool.sqlfluff.core]
+dialect = "duckdb"
+templater = "raw"
+max_line_length = 110
+rules = "LT01,CP01"
+
