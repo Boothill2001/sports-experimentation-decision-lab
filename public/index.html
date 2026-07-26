@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hands-on sports product experimentation review lab">
+  <title>Decision Room · Sports Experimentation Lab</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">DR</div>
+      <div><strong>DECISION ROOM</strong><span>SPORTS EXPERIMENTATION</span></div>
+    </div>
+    <div class="truth-badge">
+      <i></i><strong>RECORDED LAB · SEED 42</strong>
+      <span>Deterministic synthetic evidence</span>
+    </div>
+    <nav id="navigation">
+      <button class="nav-item active" data-view="decision"><small>01</small> Decision board</button>
+      <button class="nav-item" data-view="integrity"><small>02</small> Integrity gates</button>
+      <button class="nav-item" data-view="segments"><small>03</small> Segments & CUPED</button>
+      <button class="nav-item" data-view="lab"><small>04</small> Challenge lab</button>
+      <button class="nav-item" data-view="learn"><small>05</small> Learning path</button>
+    </nav>
+    <footer>
+      <strong>Honest boundary</strong>
+      <p>All users, outcomes and effects are synthetic. This demonstrates method—not employer results.</p>
+      <span>Portfolio by Nguyen Minh Tri</span>
+    </footer>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">MATCH CENTER V2 · PRODUCT REVIEW</p>
+        <h1 id="page-title">Experiment decision board</h1>
+      </div>
+      <div class="controls">
+        <label>
+          <span>SCENARIO</span>
+          <select id="scenario-select"></select>
+        </label>
+        <div class="mode-pill"><span></span> Recorded evidence</div>
+      </div>
+    </header>
+
+    <section id="decision-view" class="view active">
+      <div class="hero-grid">
+        <article class="decision-card dark">
+          <p class="eyebrow lime">REVIEW DECISION</p>
+          <div id="decision-word" class="decision-word">—</div>
+          <p id="decision-rationale" class="decision-rationale"></p>
+        </article>
+        <article class="decision-card">
+          <p class="eyebrow">PRIMARY METRIC</p>
+          <h2>7-day subscription conversion</h2>
+          <div class="lift-line"><strong id="absolute-lift">—</strong><span>absolute lift</span></div>
+          <p id="confidence-copy"></p>
+        </article>
+      </div>
+      <div class="kpi-grid four">
+        <article class="kpi"><span>Assigned users</span><strong id="assigned-users">—</strong><small>intent-to-treat</small></article>
+        <article class="kpi"><span>Control</span><strong id="control-rate">—</strong><small>subscription rate</small></article>
+        <article class="kpi"><span>Treatment</span><strong id="treatment-rate">—</strong><small>subscription rate</small></article>
+        <article class="kpi"><span>p-value</span><strong id="p-value">—</strong><small id="significance-label">two-sided z-test</small></article>
+      </div>
+      <div class="panel-grid">
+        <article class="panel">
+          <div class="panel-head"><div><p class="eyebrow">EFFECT SIZE</p><h2>Conversion comparison</h2></div><span class="tag">ITT</span></div>
+          <div id="conversion-bars" class="comparison-bars"></div>
+          <div class="ci-strip"><span id="ci-label"></span><div class="ci-track"><i id="ci-range"></i><b></b></div></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div><p class="eyebrow">SAFETY CHECK</p><h2>Guardrail veto</h2></div><span id="guardrail-status" class="tag">—</span></div>
+          <div id="guardrail-list" class="guardrail-list"></div>
+        </article>
+      </div>
+      <p class="limitation" id="limitation"></p>
+    </section>
+
+    <section id="integrity-view" class="view">
+      <div class="section-intro"><p class="eyebrow">TRUST BEFORE LIFT</p><h2>Can this experiment be interpreted?</h2><p>Randomization and population checks happen before significance.</p></div>
+      <div class="kpi-grid four">
+        <article class="kpi"><span>SRM p-value</span><strong id="srm-p">—</strong><small id="srm-copy">50/50 assignment</small></article>
+        <article class="kpi"><span>Exposure rate</span><strong id="exposure-rate">—</strong><small>after assignment</small></article>
+        <article class="kpi"><span>Assigned lift</span><strong id="itt-lift">—</strong><small>causal ITT estimate</small></article>
+        <article class="kpi"><span>Exposed-only lift</span><strong id="exposed-lift">—</strong><small>diagnostic only</small></article>
+      </div>
+      <div class="panel-grid">
+        <article class="panel">
+          <div class="panel-head"><div><p class="eyebrow">ORDER OF OPERATIONS</p><h2>Experiment trust gates</h2></div></div>
+          <ol id="trust-gates" class="gate-list"></ol>
+        </article>
+        <article class="panel dark-panel">
+          <p class="eyebrow lime">ANALYST RULE</p>
+          <blockquote>“A small p-value cannot repair broken randomization.”</blockquote>
+          <p>Check eligibility, assignment, exposure and metric lineage before reading treatment lift.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="segments-view" class="view">
+      <div class="section-intro"><p class="eyebrow">HETEROGENEITY & PRECISION</p><h2>Aggregate is not always the answer.</h2><p>Inspect planned segments and reduce noise with pre-treatment evidence.</p></div>
+      <div class="panel-grid">
+        <article class="panel">
+          <div class="panel-head"><div><p class="eyebrow">PLATFORM MIX</p><h2>Lift by platform</h2></div><span id="simpson-tag" class="tag">—</span></div>
+          <div id="segment-bars" class="segment-bars"></div>
+        </article>
+        <article class="panel cuped-card">
+          <p class="eyebrow">CUPED</p>
+          <div class="big-number" id="cuped-reduction">—</div>
+          <h2>variance reduction</h2>
+          <p>Pre-period watch time reduces noise without using post-treatment information.</p>
+          <div class="variance-track"><span id="variance-after"></span></div>
+        </article>
+      </div>
+      <article class="panel timeline-panel">
+        <div class="panel-head"><div><p class="eyebrow">DURABILITY</p><h2>Early versus late cohort lift</h2></div><span id="novelty-tag" class="tag">—</span></div>
+        <div id="cohort-bars" class="cohort-bars"></div>
+      </article>
+    </section>
+
+    <section id="lab-view" class="view">
+      <div class="section-intro"><p class="eyebrow">CHALLENGE MODE</p><h2>Decide before you reveal.</h2><p>Say your answer out loud, then compare it with the evidence.</p></div>
+      <div class="lab-layout">
+        <aside class="lab-picker" id="lab-picker"></aside>
+        <article class="panel lab-card">
+          <p class="eyebrow" id="lab-number">LAB</p>
+          <h2 id="lab-title">—</h2>
+          <p class="lab-question" id="lab-question"></p>
+          <div>
+            <h3>Questions to clarify</h3>
+            <ul id="lab-clarify"></ul>
+          </div>
+          <button id="reveal-button" class="reveal-button">Reveal decision evidence</button>
+          <div id="lab-answer" class="lab-answer hidden">
+            <span id="lab-decision" class="decision-chip"></span>
+            <p id="lab-evidence"></p>
+            <p id="lab-rationale"></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="learn-view" class="view">
+      <div class="section-intro"><p class="eyebrow">7-DAY PRACTICE PATH</p><h2>From “p &lt; 0.05” to decision quality.</h2><p>Run one lab per day and explain it without reading the answer.</p></div>
+      <div class="learning-grid" id="learning-grid"></div>
+      <article class="interview-card">
+        <div><p class="eyebrow lime">FINAL TEST</p><h2>Can you defend a HOLD decision when conversion is up?</h2></div>
+        <p>Explain randomization, estimand, uncertainty, guardrail, business impact and limitation in 90 seconds.</p>
+      </article>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+</body>
+</html>
+
