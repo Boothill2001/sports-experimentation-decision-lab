@@ -1,0 +1,176 @@
+HỌC SPORTS PRODUCT EXPERIMENTATION TRONG 7 NGÀY
+================================================
+
+Mục tiêu:
+Sau 7 ngày, bạn phải tự đưa ra và bảo vệ được một trong năm quyết định:
+SHIP / HOLD / WAIT / INVALID / INCONCLUSIVE.
+
+Quy tắc học:
+- Mỗi ngày mở start_lab.bat.
+- Chọn scenario được yêu cầu.
+- Đoán quyết định trước khi mở Challenge Lab.
+- Chạy SQL tương ứng trong sql/duckdb/experiment_workflows.sql.
+- Tự nói kết luận thành tiếng trong 60–90 giây.
+- Không học thuộc p-value. Luôn bắt đầu từ grain, randomization và metric contract.
+
+----------------------------------------------------------------------
+NGÀY 1 — GRAIN, ESTIMAND VÀ METRIC CONTRACT
+----------------------------------------------------------------------
+
+Đọc:
+- src/sports_exp/generator.py
+- docs/METRIC_CONTRACT.md
+
+Phải trả lời được:
+1. Một row trong assignments, exposures và outcomes đại diện cho gì?
+2. Vì sao randomization unit là user_id?
+3. Intent-to-treat đo effect trên ai?
+4. Tại sao không được đổi primary metric sau khi xem kết quả?
+
+Thực hành:
+1. Chạy: sports-exp generate --profile smoke --scenario clean
+2. Chạy SQL W01 và W03.
+3. Tự viết một câu metric definition cho subscribed_7d.
+
+Đạt khi:
+Bạn giải thích được “assigned user” khác “exposed user” mà không nhìn đáp án.
+
+----------------------------------------------------------------------
+NGÀY 2 — SAMPLE-RATIO MISMATCH VÀ DATA LINEAGE
+----------------------------------------------------------------------
+
+Scenario: srm
+
+Phải trả lời được:
+1. Team dự kiến 50/50 nhưng quan sát 58/42 nghĩa là gì?
+2. Vì sao một lift đẹp vẫn INVALID?
+3. SRM có chứng minh chính xác bug nằm ở đâu không?
+
+Thực hành:
+1. Chạy: sports-exp run-lab L02
+2. Chạy SQL W02.
+3. Vẽ lineage: eligible → assigned → exposed → outcome.
+4. Liệt kê ba nguyên nhân: eligibility bug, randomizer bug, logging loss.
+
+Đạt khi:
+Bạn nói được câu: “SRM là trust gate; nó phát hiện bất thường nhưng chưa tự chỉ ra root cause.”
+
+----------------------------------------------------------------------
+NGÀY 3 — EFFECT SIZE, CONFIDENCE INTERVAL VÀ POWER
+----------------------------------------------------------------------
+
+Scenario: clean
+
+Phải trả lời được:
+1. Absolute lift khác relative lift như thế nào?
+2. Confidence interval chứa 0 nói lên điều gì?
+3. Statistical significance có đồng nghĩa business significance không?
+
+Thực hành:
+1. So sánh control/treatment ở Decision Board.
+2. Chạy SQL W03.
+3. Nói kết quả theo format:
+   “Treatment thay đổi conversion X điểm %, 95% CI từ A đến B, p=..., trên N users.”
+
+Đạt khi:
+Bạn luôn nói effect size + uncertainty, không chỉ nói “p < 0.05”.
+
+----------------------------------------------------------------------
+NGÀY 4 — GUARDRAIL CÓ QUYỀN VETO
+----------------------------------------------------------------------
+
+Scenario: guardrail
+
+Phải trả lời được:
+1. Vì sao conversion tăng nhưng quyết định là HOLD?
+2. Guardrail phải được thống nhất trước experiment hay sau?
+3. Ai có quyền chấp nhận trade-off giữa conversion và crash rate?
+
+Thực hành:
+1. Chạy: sports-exp run-lab L03
+2. Chạy SQL W04.
+3. Viết decision memo 5 dòng dùng template trong docs/DECISION_MEMO.txt.
+
+Đạt khi:
+Bạn bảo vệ được HOLD trước stakeholder đang chỉ nhìn doanh thu.
+
+----------------------------------------------------------------------
+NGÀY 5 — NOVELTY VÀ SEQUENTIAL PEEKING
+----------------------------------------------------------------------
+
+Scenario: novelty
+
+Phải trả lời được:
+1. Vì sao tuần đầu tăng mạnh nhưng chưa nên ship?
+2. Nếu nhìn p-value mỗi ngày và dừng khi <0.05 thì sai ở đâu?
+3. Experiment duration phải dựa trên yếu tố nào?
+
+Thực hành:
+1. Chạy SQL W05 và W09.
+2. So sánh early cohort với late cohort.
+3. Đề xuất minimum runtime và stopping rule trước khi chạy lại.
+
+Đạt khi:
+Bạn phân biệt được cumulative significance với durable product effect.
+
+----------------------------------------------------------------------
+NGÀY 6 — SIMPSON’S PARADOX, SEGMENT VÀ CUPED
+----------------------------------------------------------------------
+
+Scenarios: simpson và clean
+
+Phải trả lời được:
+1. Vì sao aggregate âm trong khi Android và iOS đều dương?
+2. Segment analysis khi nào là diagnostic, khi nào là p-hacking?
+3. CUPED dùng biến nào và tại sao biến đó phải có trước treatment?
+
+Thực hành:
+1. Chạy SQL W06 và W08.
+2. Tính platform mix theo variant.
+3. Mở Segments & CUPED, giải thích variance reduction.
+
+Đạt khi:
+Bạn không kết luận từ aggregate trước khi kiểm tra allocation mix.
+
+----------------------------------------------------------------------
+NGÀY 7 — EXPOSURE BIAS VÀ REVIEW BOARD 90 GIÂY
+----------------------------------------------------------------------
+
+Scenario: exposure_bias
+
+Phải trả lời được:
+1. Vì sao lọc exposed users có thể phá randomization?
+2. Assigned lift và exposed-only lift trả lời hai câu hỏi khác nhau thế nào?
+3. Khi nào cần phương pháp IV/CACE thay vì exposed-only comparison?
+
+Thực hành:
+1. Chạy SQL W07.
+2. Chạy Challenge Lab L06 rồi L08.
+3. Demo 90 giây theo thứ tự:
+   business question → randomization → SRM → effect/CI → guardrail
+   → segment/durability → decision → limitation.
+
+Đạt khi:
+Bạn có thể đưa quyết định mà không dùng câu “tôi thấy chart cho biết”.
+
+======================================================================
+BÀI THI CUỐI
+======================================================================
+
+Nhờ một người chọn ngẫu nhiên scenario nhưng không cho bạn biết.
+Bạn có 3 phút xem dashboard và 90 giây trình bày.
+
+Tự chấm 10 điểm:
+1. Nói đúng grain.
+2. Nói đúng estimand.
+3. Kiểm tra SRM trước lift.
+4. Nói effect size.
+5. Nói confidence interval.
+6. Kiểm tra guardrail.
+7. Kiểm tra durability/segment.
+8. Đưa quyết định rõ ràng.
+9. Nêu limitation synthetic.
+10. Đề xuất next action có owner.
+
+Từ 8/10 trở lên: đủ khả năng demo repo trong phỏng vấn.
+

@@ -1,0 +1,54 @@
+name: quality-gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - name: Python quality
+        run: ruff check .
+      - name: SQL quality
+        run: sqlfluff lint sql/duckdb
+      - name: Unit, decision and persistence tests
+        run: pytest
+      - name: Deterministic decision matrix
+        run: sports-exp validate
+      - name: Rebuild public evidence
+        run: |
+          sports-exp export-pages
+          git diff --exit-code public/data/experiments.json
+
+  pages:
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+      - id: deployment
+        uses: actions/deploy-pages@v4
+

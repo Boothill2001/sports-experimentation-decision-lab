@@ -1,0 +1,47 @@
+TEMPLATE — EXPERIMENT DECISION MEMO
+===================================
+
+Experiment:
+Owner:
+Decision date:
+Decision: SHIP / HOLD / WAIT / INVALID / INCONCLUSIVE
+
+1. BUSINESS QUESTION
+Treatment thay đổi quyết định hoặc trải nghiệm nào của người dùng?
+
+2. TRUST GATES
+- Randomization unit:
+- Planned allocation:
+- SRM result:
+- Assignment/exposure reconciliation:
+- Data-quality exceptions:
+
+3. PRIMARY EFFECT
+- Control rate:
+- Treatment rate:
+- Absolute lift:
+- Relative lift:
+- 95% confidence interval:
+- p-value:
+- Minimum detectable/business-relevant effect:
+
+4. GUARDRAILS
+- Crash:
+- Cancellation:
+- Latency/performance:
+- Có guardrail nào đủ điều kiện veto không?
+
+5. DURABILITY VÀ SEGMENT
+- Early versus late cohort:
+- Platform/channel heterogeneity:
+- Có dấu hiệu Simpson’s paradox hoặc multiple testing không?
+
+6. RECOMMENDATION
+Một câu có động từ rõ ràng: ship, hold, extend, rerun hoặc invalidate.
+
+7. NEXT ACTION
+Owner + hành động + deadline + monitoring sau quyết định.
+
+8. LIMITATION
+Nói rõ dữ liệu synthetic, sample/window hạn chế và điều chưa thể kết luận.
+
