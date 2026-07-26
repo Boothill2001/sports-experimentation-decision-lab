@@ -8,5 +8,5 @@ data/generated/
 output/
 *.duckdb
 *.log
+*.egg-info/
 .env
-
