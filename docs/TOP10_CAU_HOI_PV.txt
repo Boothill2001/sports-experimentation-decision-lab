@@ -1,0 +1,197 @@
+TOP 10 CÂU HỎI PHỎNG VẤN — SPORTS EXPERIMENTATION DECISION LAB
+================================================================
+
+Cách luyện:
+Tự trả lời 60–90 giây trước, sau đó mới đọc phần “Điểm phải có”.
+
+----------------------------------------------------------------
+1. BUSINESS QUESTION VÀ PRIMARY METRIC LÀ GÌ?
+----------------------------------------------------------------
+
+Điểm phải có:
+- Match Center v2 có tăng subscription trong 7 ngày không?
+- Randomization unit là user_id.
+- Primary metric = assigned users subscribe trong 7 ngày / toàn bộ assigned users.
+- Crash và cancellation là guardrails.
+- Metric được định nghĩa trước khi xem kết quả.
+
+Câu xoáy:
+Tại sao không chọn revenue là primary sau khi thấy revenue tăng đẹp?
+
+Trả lời:
+Đổi primary sau khi xem dữ liệu làm tăng false-positive risk và biến confirmatory
+analysis thành metric hunting. Revenue có thể là secondary metric nhưng phải ghi rõ.
+
+----------------------------------------------------------------
+2. INTENT-TO-TREAT KHÁC EXPOSED-ONLY THẾ NÀO?
+----------------------------------------------------------------
+
+Điểm phải có:
+- ITT giữ toàn bộ users theo assignment ban đầu.
+- Exposure xảy ra sau assignment và có thể bị treatment tác động.
+- Lọc exposed users có thể phá randomization.
+- Exposed-only là diagnostic, không tự động là causal estimate.
+
+Câu xoáy:
+Nếu chỉ 60% treatment users nhìn thấy UI mới thì sao?
+
+Trả lời:
+Giữ ITT làm estimate chính, điều tra delivery/compliance, báo exposure rate.
+Nếu cần effect trên compliers phải dùng thiết kế/phương pháp phù hợp như IV/CACE,
+không so exposed treatment với exposed control một cách ngây thơ.
+
+----------------------------------------------------------------
+3. SAMPLE-RATIO MISMATCH LÀ GÌ?
+----------------------------------------------------------------
+
+Điểm phải có:
+- Planned split 50/50 nhưng observed split lệch quá mức do random chance.
+- Repo dùng chi-square input và ngưỡng SRM p < 0.001.
+- SRM làm kết quả INVALID trước khi đọc treatment lift.
+- SRM phát hiện trust problem nhưng chưa tự xác định root cause.
+
+Câu xoáy:
+Ba nguyên nhân thường gặp?
+
+Trả lời:
+Eligibility khác nhau giữa variants, randomization/service bug, hoặc logging/join
+loss không cân bằng.
+
+----------------------------------------------------------------
+4. P-VALUE VÀ CONFIDENCE INTERVAL NÓI GÌ?
+----------------------------------------------------------------
+
+Điểm phải có:
+- p-value không phải xác suất treatment “đúng”.
+- 95% CI thể hiện tập effect size tương thích với dữ liệu và assumptions.
+- Phải nói absolute lift, relative lift, CI và practical significance.
+- CI chứa 0 thì bằng chứng hiện tại chưa loại được no-effect.
+
+Câu xoáy:
+p < 0.05 nhưng lift chỉ +0.01 điểm % thì có ship không?
+
+Trả lời:
+Chưa chắc. Statistical significance không đảm bảo business value; phải so effect
+với minimum worthwhile effect, cost, risk và guardrails.
+
+----------------------------------------------------------------
+5. VÌ SAO PRIMARY WIN NHƯNG QUYẾT ĐỊNH CÓ THỂ LÀ HOLD?
+----------------------------------------------------------------
+
+Điểm phải có:
+- Scenario guardrail tăng conversion nhưng crash rate cũng tăng đáng tin cậy.
+- Guardrail được predeclare và có quyền veto.
+- HOLD để sửa reliability/segment root cause, không phủ nhận primary result.
+- Decision phải có owner và điều kiện review lại.
+
+Câu xoáy:
+Ai quyết định chấp nhận trade-off?
+
+Trả lời:
+Analyst cung cấp effect, uncertainty và impact; Product/Engineering owner quyết định
+theo policy đã thống nhất. Không để analyst âm thầm đổi guardrail sau khi thấy kết quả.
+
+----------------------------------------------------------------
+6. NOVELTY EFFECT VÀ PEEKING NGUY HIỂM THẾ NÀO?
+----------------------------------------------------------------
+
+Điểm phải có:
+- Early cohort lift cao nhưng late cohort lift giảm.
+- Dừng experiment khi p-value lần đầu < 0.05 làm tăng false-positive rate.
+- Duration/stopping rule phải chọn trước.
+- WAIT khi effect chưa chứng minh durability.
+
+Câu xoáy:
+Chạy lâu hơn luôn tốt hơn không?
+
+Trả lời:
+Không. Cần đủ một hoặc nhiều chu kỳ hành vi và sample size, nhưng quá lâu có thể
+tăng exposure cost, contamination hoặc seasonality. Duration dựa trên power và product cycle.
+
+----------------------------------------------------------------
+7. SIMPSON’S PARADOX XẢY RA NHƯ THẾ NÀO?
+----------------------------------------------------------------
+
+Điểm phải có:
+- Aggregate lift âm nhưng Android và iOS đều dương.
+- Treatment/control có platform mix khác nhau.
+- Platform có baseline conversion khác nhau.
+- Phải audit allocation/stratification trước khi lấy weighted aggregate.
+
+Câu xoáy:
+Có nên luôn segment cho đến khi tìm thấy nhóm thắng?
+
+Trả lời:
+Không. Segment nên được plan hoặc dùng diagnostic có caveat; thử quá nhiều subgroup
+làm tăng multiple-testing false positives.
+
+----------------------------------------------------------------
+8. CUPED GIÚP GÌ VÀ CÓ THỂ DÙNG BIẾN NÀO?
+----------------------------------------------------------------
+
+Điểm phải có:
+- CUPED dùng pre-period watch minutes có tương quan với post outcome.
+- Biến phải có trước treatment và không bị treatment tác động.
+- Điều chỉnh giảm variance, tăng precision, không tạo effect từ không khí.
+- Phải giữ raw và adjusted result auditable.
+
+Câu xoáy:
+Có dùng “watch minutes trong ngày đầu sau assignment” làm covariate được không?
+
+Trả lời:
+Không an toàn vì treatment có thể đã tác động biến đó; conditioning có thể tạo bias.
+
+----------------------------------------------------------------
+9. TẠI SAO REPO CÓ CẢ SQL, PYTHON VÀ PUBLIC RECORDED DEMO?
+----------------------------------------------------------------
+
+Điểm phải có:
+- SQL chứng minh lineage, joins, cohorts, guardrails và reconciliation.
+- Python sinh dữ liệu deterministic và tính thống kê/test.
+- DuckDB giúp chạy local không cần cloud.
+- GitHub Pages cho recruiter xem ngay nhưng được ghi rõ recorded synthetic evidence.
+- CI rebuild JSON và fail nếu dashboard không khớp engine.
+
+Câu xoáy:
+Public dashboard có chứng minh production A/B platform không?
+
+Trả lời:
+Không. Nó chứng minh reasoning, reproducibility và communication; production còn cần
+assignment service, telemetry governance, power planning và operational monitoring.
+
+----------------------------------------------------------------
+10. HÃY TRÌNH BÀY DECISION TRONG 90 GIÂY
+----------------------------------------------------------------
+
+Thứ tự phải có:
+1. Business question.
+2. Randomization unit và ITT population.
+3. SRM/data-quality gate.
+4. Control/treatment rate và absolute lift.
+5. 95% CI và p-value.
+6. Guardrails.
+7. Durability/platform mix.
+8. SHIP/HOLD/WAIT/INVALID.
+9. Owner + next action.
+10. Limitation synthetic.
+
+Mẫu:
+“Experiment dùng user-level 50/50 assignment và phân tích ITT. SRM không phát hiện
+bất thường. Treatment thay đổi 7-day conversion X điểm %, 95% CI A đến B. Crash và
+cancellation đều healthy, effect không decay ở late cohorts và platform direction
+nhất quán. Tôi đề xuất SHIP theo controlled rollout, Product owner theo dõi guardrails
+7 ngày. Kết quả trong repo là synthetic seed 42 nên chứng minh phương pháp, không phải
+effect estimate của Unity Sport.”
+
+================================================================
+DẤU HIỆU BẠN ĐÃ HIỂU THẬT
+================================================================
+
+- Luôn nói estimand/population trước p-value.
+- Kiểm tra SRM trước treatment lift.
+- Không dùng exposed-only như causal answer mặc định.
+- Có thể bảo vệ HOLD dù conversion tăng.
+- Nhìn aggregate thì nhớ kiểm tra mix.
+- CUPED chỉ dùng pre-treatment covariate.
+- Recommendation luôn có uncertainty, guardrail, owner và limitation.
+

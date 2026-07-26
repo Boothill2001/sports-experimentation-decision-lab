@@ -98,7 +98,8 @@ The five workspaces are:
 5. **Learning Path** — seven days from metric contract to review-board communication.
 
 Start with the Vietnamese [7-day workbook](docs/HOC_7_NGAY.txt), then use the
-[decision memo template](docs/DECISION_MEMO.txt).
+[decision memo template](docs/DECISION_MEMO.txt) and practice the
+[top 10 interview questions](docs/TOP10_CAU_HOI_PV.txt).
 
 ## Reproduce locally
 
@@ -182,4 +183,3 @@ The strongest line in this repository is not “I know A/B testing.” It is:
 - Public Pages is recorded evidence, while local FastAPI regenerates the same seeded scenarios.
 
 Released under the [MIT License](LICENSE).
-
