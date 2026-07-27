@@ -24,3 +24,19 @@ def test_review_board_supports_accessible_motion_and_keyboard_controls() -> None
     assert ":focus-visible" in css
     assert "event.key.toLowerCase() === \"k\"" in javascript
     assert 'event.key === "Escape"' in javascript
+
+
+def test_workday_simulator_has_seven_stage_learning_contract() -> None:
+    html = (PUBLIC / "workday.html").read_text(encoding="utf-8")
+    css = (PUBLIC / "assets" / "workday.css").read_text(encoding="utf-8")
+    javascript = (PUBLIC / "assets" / "workday.js").read_text(encoding="utf-8")
+
+    assert "Một ngày đi làm" in html
+    assert 'id="timeline"' in html
+    assert 'id="question-list"' in html
+    assert 'id="action-options"' in html
+    assert 'id="deliverable"' in html
+    assert javascript.count("questions: [") == 7
+    assert "reports.guardrail" in javascript
+    assert "localStorage" in javascript
+    assert "prefers-reduced-motion" in css

@@ -159,6 +159,25 @@ Read the [metric contract](docs/METRIC_CONTRACT.md) before interpreting a result
 Double-click `start_lab.bat`. It creates a Python 3.11 environment, regenerates the
 recorded evidence and opens `http://localhost:8091`.
 
+### New to Product Analytics? Start with one simulated workday
+
+**[Open the Vietnamese Workday Simulator](https://boothill2001.github.io/sports-experimentation-decision-lab/workday.html)**
+
+The guided interface simulates a complete day from a vague 09:00 Product request to a
+16:00 decision memo. Seven sequential missions cover scope clarification, metric
+contract, integrity, effect size, guardrail veto, Engineering handoff and stakeholder
+delivery. Each mission includes:
+
+- four decomposition questions;
+- one action choice with immediate feedback;
+- a hint written for a first-time analyst;
+- the exact artifact an analyst would submit;
+- role boundaries, owner and next action.
+
+Progress is saved only in the learner's browser. The simulator reads the seeded
+`guardrail` scenario from the same public evidence contract as the recruiter Review
+Board; it does not invent a second set of results.
+
 Review an experiment in this order:
 
 1. Check the design contract.

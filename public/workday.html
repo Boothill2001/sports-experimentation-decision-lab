@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mô phỏng một ngày làm Product Data Analyst cho người mới">
+  <meta name="theme-color" content="#182033">
+  <title>Ngày đầu làm Product Data Analyst</title>
+  <link rel="stylesheet" href="assets/workday.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="back-link" href="index.html">
+      <span aria-hidden="true">←</span>
+      Experiment Review Board
+    </a>
+    <div class="topbar-meta">
+      <span>LEARNING MODE</span>
+      <strong>Không cần kinh nghiệm trước</strong>
+    </div>
+    <button class="reset-button" id="reset-day" type="button">Làm lại từ đầu</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">DAY 01 · PRODUCT DATA ANALYST</p>
+        <h1>Một ngày đi làm,<br><em>từng việc một.</em></h1>
+        <p class="hero-intro">
+          Bạn không cần biết SQL ngay. Hãy học cách nhận task, đặt câu hỏi, kiểm tra
+          bằng chứng và giao một quyết định mà Product có thể sử dụng.
+        </p>
+      </div>
+      <div class="day-brief">
+        <span class="brief-label">TÌNH HUỐNG HÔM NAY</span>
+        <strong>Match Center v2</strong>
+        <p>PM muốn rollout 100% trước trận đấu cuối tuần.</p>
+        <dl>
+          <div><dt>Deadline</dt><dd>16:00</dd></div>
+          <div><dt>Stakeholders</dt><dd>Product · Mobile · Analytics</dd></div>
+          <div><dt>Đầu ra</dt><dd>Recommendation + decision memo</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="orientation" aria-label="Cách học">
+      <div><span>1</span><p><strong>Đọc task</strong>Hiểu người ta đang cần quyết định gì.</p></div>
+      <i aria-hidden="true">→</i>
+      <div><span>2</span><p><strong>Trả lời câu nhỏ</strong>Decompose vấn đề trước khi query.</p></div>
+      <i aria-hidden="true">→</i>
+      <div><span>3</span><p><strong>Chọn hành động</strong>Nhận feedback ngay, không sợ sai.</p></div>
+      <i aria-hidden="true">→</i>
+      <div><span>4</span><p><strong>Giao sản phẩm</strong>Biết chính xác analyst phải nộp gì.</p></div>
+    </section>
+
+    <section class="workbench">
+      <aside class="timeline-panel">
+        <div class="timeline-heading">
+          <p>YOUR WORKDAY</p>
+          <strong id="progress-copy">0 / 7 hoàn thành</strong>
+        </div>
+        <div class="progress-track"><span id="progress-fill"></span></div>
+        <nav class="timeline" id="timeline" aria-label="Các chặng trong ngày"></nav>
+        <div class="role-boundary">
+          <span>NHỚ ĐIỀU NÀY</span>
+          <p>Analyst không tự bấm nút rollout. Bạn biến dữ liệu thành recommendation để owner quyết định.</p>
+        </div>
+      </aside>
+
+      <article class="mission" id="mission" aria-live="polite">
+        <header class="mission-header">
+          <div>
+            <p id="mission-kicker"></p>
+            <h2 id="mission-title"></h2>
+          </div>
+          <span class="mission-status" id="mission-status">ĐANG LÀM</span>
+        </header>
+
+        <section class="inbox-card" id="inbox-card">
+          <div class="avatar" id="sender-avatar"></div>
+          <div>
+            <div class="sender-line"><strong id="sender-name"></strong><span id="sender-role"></span></div>
+            <blockquote id="inbox-message"></blockquote>
+          </div>
+        </section>
+
+        <section class="mission-goal">
+          <span>MỤC TIÊU CỦA CHẶNG NÀY</span>
+          <p id="mission-goal"></p>
+        </section>
+
+        <section class="decomposition">
+          <div class="section-heading">
+            <div><span>DECOMPOSITION</span><h3>Chia task thành những câu nhỏ</h3></div>
+            <button class="hint-button" id="hint-button" type="button">Cần gợi ý?</button>
+          </div>
+          <ol id="question-list"></ol>
+          <div class="hint-box" id="hint-box" hidden></div>
+        </section>
+
+        <section class="action-block">
+          <div class="section-heading">
+            <div><span>YOUR MOVE</span><h3>Bây giờ bạn sẽ làm gì?</h3></div>
+            <small>Chọn một đáp án</small>
+          </div>
+          <div class="action-options" id="action-options"></div>
+          <div class="feedback" id="feedback" hidden>
+            <div id="feedback-icon"></div>
+            <div><strong id="feedback-title"></strong><p id="feedback-copy"></p></div>
+          </div>
+        </section>
+
+        <section class="deliverable" id="deliverable" aria-disabled="true">
+          <div class="deliverable-lock" id="deliverable-lock">Hoàn thành lựa chọn để mở đầu ra</div>
+          <div class="deliverable-content">
+            <div class="section-heading">
+              <div><span>WHAT YOU SUBMIT</span><h3>Đầu ra của analyst</h3></div>
+              <span class="ready-pill">READY</span>
+            </div>
+            <div id="deliverable-body"></div>
+          </div>
+        </section>
+
+        <footer class="mission-nav">
+          <button id="previous-mission" type="button">← Chặng trước</button>
+          <button class="primary" id="next-mission" type="button" disabled>Chặng tiếp theo →</button>
+        </footer>
+      </article>
+
+      <aside class="coach-panel">
+        <div class="coach-avatar">C</div>
+        <span>ANALYST COACH</span>
+        <h3 id="coach-title">Đừng mở SQL quá sớm.</h3>
+        <p id="coach-copy"></p>
+        <div class="coach-rule">
+          <span>CÂU NHỚ NHANH</span>
+          <strong id="coach-rule"></strong>
+        </div>
+        <div class="today-output">
+          <span>CUỐI NGÀY BẠN CÓ</span>
+          <ul>
+            <li>Scope đã xác nhận</li>
+            <li>Integrity checklist</li>
+            <li>Effect + uncertainty</li>
+            <li>Guardrail review</li>
+            <li>Decision memo</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <dialog class="completion-dialog" id="completion-dialog">
+    <button class="dialog-close" id="completion-close" type="button" aria-label="Đóng">×</button>
+    <span class="completion-mark">DAY 01 · COMPLETE</span>
+    <h2>Bạn vừa làm xong một ngày của Product Data Analyst.</h2>
+    <p>
+      Bạn không chỉ đọc conversion. Bạn đã xác nhận task, bảo vệ integrity,
+      diễn giải uncertainty, kiểm tra product harm và giao recommendation có owner.
+    </p>
+    <div class="completion-grid">
+      <div><strong>7</strong><span>chặng công việc</span></div>
+      <div><strong>28</strong><span>câu decomposition</span></div>
+      <div><strong>1</strong><span>decision package</span></div>
+    </div>
+    <div class="completion-actions">
+      <a href="index.html">Mở Review Board</a>
+      <button id="restart-day" type="button">Làm lại ngày này</button>
+    </div>
+  </dialog>
+
+  <script src="assets/workday.js"></script>
+</body>
+</html>
