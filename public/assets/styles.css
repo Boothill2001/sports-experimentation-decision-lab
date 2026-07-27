@@ -127,17 +127,21 @@ button:focus-visible, select:focus-visible, a:focus-visible {
 }
 .header-action {
   padding: 9px 13px;
+  display: inline-flex;
+  align-items: center;
   border: 1px solid var(--line-strong);
   border-radius: 9px;
   background: transparent;
   color: var(--ink);
   font-size: 12px;
   font-weight: 700;
+  text-decoration: none;
   cursor: pointer;
   transition: transform .18s ease, background .18s ease;
 }
 .header-action:hover { transform: translateY(-2px); background: var(--paper); }
 .header-action span { margin-right: 6px; color: var(--violet); }
+.workday-link { border-color: rgba(108, 92, 231, .36); background: rgba(238, 234, 253, .55); }
 .header-action.primary { border-color: var(--navy); background: var(--navy); color: white; }
 .header-action.primary span { color: var(--coral); }
 
@@ -813,6 +817,14 @@ button:focus-visible, select:focus-visible, a:focus-visible {
 .final-test span { color: var(--coral); font: 500 8px var(--mono); }
 .final-test strong { display: block; margin: 8px 0; font: 700 19px var(--display); }
 .final-test p { margin: 0; color: #aeb4cb; font-size: 12px; }
+.final-test a {
+  display: inline-block;
+  margin-top: 16px;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
 .toast {
   position: fixed;
   right: 24px;
